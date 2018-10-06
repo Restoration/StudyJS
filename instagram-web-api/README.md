@@ -69,3 +69,78 @@ request.onload = function() {
 };
 request.send();
 ```
+
+## Step.4
+Get image data.
+```
+var request = new XMLHttpRequest();
+request.open('GET','https://api.instagram.com/v1/users/self/media/recent/?access_token=ACCESS_TOKEN');
+request.responseType = 'json';
+request.onload = function() {
+    var status = request.status;
+    if (status === 200) {
+        var data = request.response.data;
+        for (var i = 0; i< data.length; i++) {
+            var standard = data[i].images.standard_resolution;
+            console.log(standard);
+        }
+    } else {
+        console.log(status);
+        return;
+    }
+};
+request.send();
+```
+
+Render image.Follow this function.This function is create image from Instagram API object.
+```
+function createImage(data){
+    var img = document.createElement("img");
+    img.setAttribute("src",data.url);
+    img.setAttribute("width",data.width);
+    img.setAttribute("height",data.height);
+    return img;
+}
+```
+
+Finaly,execute into the for loop.
+```
+for (var i = 0; i< data.length; i++) {
+    var standard = data[i].images.standard_resolution;
+    var image = createImage(standard);
+    document.body.appendChild(image);
+    console.log(image);
+}
+```
+
+---
+## All code
+```
+var request = new XMLHttpRequest();
+request.open('GET','https://api.instagram.com/v1/users/self/media/recent/?access_token=ACCESS_TOKEN');
+request.responseType = 'json';
+request.onload = function() {
+    var status = request.status;
+    if (status === 200) {
+        var data = request.response.data;
+        for (var i = 0; i< data.length; i++) {
+            var standard = data[i].images.standard_resolution;
+            var image = createImage(standard);
+            document.body.appendChild(image);
+        }
+    } else {
+        console.log(status);
+        return;
+    }
+};
+request.send();
+
+function createImage(data){
+    var img = document.createElement("img");
+    img.setAttribute("src",data.url);
+    img.setAttribute("width",data.width);
+    img.setAttribute("height",data.height);
+    return img;
+}
+```
+
