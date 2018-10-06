@@ -16,7 +16,7 @@ https://instagram.com/oauth/authorize/?client_id=<Your CLIENT ID>&redirect_uri=<
 ```
 
 Click _Authorize_ button.  
-You redirect valid readirect URI. This URI is _added access_token_ which is your token key.If you wanna check access token key, access authorize url again.
+You redirect valid readirect URI. This URI is added _access_token_ which is your token key.If you wanna check access token key, access authorize url again.
 
 ## Step.2
 Second one, access instagram web api.
@@ -24,7 +24,7 @@ Second one, access instagram web api.
 
 You can two endpoints , my user information or your media.
 - users/self/
-- users/self/media/recent
+- users/self/media/recent/
 Replace your access token key.You can two endpoints , my user information or
 ```
 https://api.instagram.com/v1/users/self/recent?access_token=ACCESS_TOKEN
@@ -72,7 +72,7 @@ request.send();
 
 ## Step.4
 Get image data.
-```
+```JavaScript
 var request = new XMLHttpRequest();
 request.open('GET','https://api.instagram.com/v1/users/self/media/recent/?access_token=ACCESS_TOKEN');
 request.responseType = 'json';
@@ -93,7 +93,7 @@ request.send();
 ```
 
 Render image.Follow this function.This function is create image from Instagram API object.
-```
+```JavaScript
 function createImage(data){
     var img = document.createElement("img");
     img.setAttribute("src",data.url);
@@ -104,7 +104,7 @@ function createImage(data){
 ```
 
 Finaly,execute into the for loop.
-```
+```JavaScript
 for (var i = 0; i< data.length; i++) {
     var standard = data[i].images.standard_resolution;
     var image = createImage(standard);
@@ -112,10 +112,9 @@ for (var i = 0; i< data.length; i++) {
     console.log(image);
 }
 ```
-
 ---
 ## All code
-```
+```JavaScript
 var request = new XMLHttpRequest();
 request.open('GET','https://api.instagram.com/v1/users/self/media/recent/?access_token=ACCESS_TOKEN');
 request.responseType = 'json';
