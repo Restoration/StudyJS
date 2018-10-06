@@ -22,9 +22,12 @@ You redirect valid readirect URI. This URI is _added access_token_ which is your
 Second one, access instagram web api.
 [API Endpoints](https://www.instagram.com/developer/endpoints/)
 
-Replace your access token key.
+You can two endpoints , my user information or your media.
+- users/self/
+- users/self/media/recent
+Replace your access token key.You can two endpoints , my user information or
 ```
-https://api.instagram.com/v1/tags/nofilter/media/recent?access_token=ACCESS_TOKEN
+https://api.instagram.com/v1/users/self/recent?access_token=ACCESS_TOKEN
 ```
 
 
@@ -33,14 +36,14 @@ method.
 
 ```JavaScript
 const request = new XMLHttpRequest();
-request.open('GET','https://api.instagram.com/v1/tags/nofilter/media/recent?access_token=ACCESS_TOKEN');
+request.open('GET','https://api.instagram.com/v1/users/self/media/recent?access_token=ACCESS_TOKEN');
 request.send();
 ```
 
 But,above code can't checking status, so you should add event.Get information wehen open page.
 ```
 var request = new XMLHttpRequest();
-request.open('GET','https://api.instagram.com/v1/tags/nofilter/media/recent?access_token=ACCESS_TOKEN');
+request.open('GET','https://api.instagram.com/v1/users/self/media/recent?access_token=ACCESS_TOKEN');
 request.addEventListener("load", (e) => {
     console.log(e.target.status);
     console.log(e.target.responseText);
@@ -48,5 +51,24 @@ request.addEventListener("load", (e) => {
 request.send();
 ```
 In this case, render datas are status and respons text.If it is normal it returns 200.
+
+## Step.3
+Add error handling proccess.If it isn't 200 status render error status.
+```
+var request = new XMLHttpRequest();
+request.open('GET','https://api.instagram.com/v1/users/self/media/recent/?access_token=ACCESS_TOKEN');
+request.addEventListener("load", (e) => {
+    if (e.target.status !== 200) {
+        console.log(e.target.status);
+        return;
+    }
+    console.log(e.target.status);
+    console.log(e.target.responseText);
+});
+request.addEventListener("error", () => {
+    console.log("Network Error");
+});
+request.send();
+```
 
 
