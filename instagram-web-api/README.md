@@ -41,7 +41,7 @@ request.send();
 ```
 
 But,above code can't checking status, so you should add event.Get information wehen open page.
-```
+```JavaScript
 var request = new XMLHttpRequest();
 request.open('GET','https://api.instagram.com/v1/users/self/media/recent?access_token=ACCESS_TOKEN');
 request.addEventListener("load", (e) => {
@@ -53,22 +53,19 @@ request.send();
 In this case, render datas are status and respons text.If it is normal it returns 200.
 
 ## Step.3
-Add error handling proccess.If it isn't 200 status render error status.
-```
+Another way, don't use addEventListener. Add error handling proccess.If it isn't 200 status render error status and use json data.
+```JavaScript
 var request = new XMLHttpRequest();
 request.open('GET','https://api.instagram.com/v1/users/self/media/recent/?access_token=ACCESS_TOKEN');
-request.addEventListener("load", (e) => {
-    if (e.target.status !== 200) {
-        console.log(e.target.status);
+request.responseType = 'json';
+request.onload = function() {
+    var status = request.status;
+    if (status === 200) {
+        console.log(request.response);
+    } else {
+        console.log(status);
         return;
     }
-    console.log(e.target.status);
-    console.log(e.target.responseText);
-});
-request.addEventListener("error", () => {
-    console.log("Network Error");
-});
+};
 request.send();
 ```
-
-
