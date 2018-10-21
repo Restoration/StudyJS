@@ -15,12 +15,5 @@ function hide(){
     modal.style.display = "none";
 }
 
-function handler(){
-    open.addEventListener('click',show);
-    close.addEventListener('click',hide);
-}
-
-function init(){
-    handler();
-}
-init();
+open.addEventListener('click',show);
+close.addEventListener('click',hide);
