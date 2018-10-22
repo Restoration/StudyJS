@@ -1,4 +1,4 @@
-# Modal Window Plugin
+# Modal Window
 
 ## Step.1
 First one, To understand how to make modal window. Modal window has two layers, It't likes background layer and content layer.
@@ -142,15 +142,15 @@ close.addEventListener('click',hide);
 
 ## Step.3
 Modal window needs centerling. To element should be add css style.
-```
-position absolute;
+```CSS
+position: absolute;
 top: 50%;
 left: 50%;
 margin-top: -(element height / 2) px;
 margin-left: -(element width / 2) px;
 ```
 Therefore, adding style source in show function.
-```
+```JavaScript
 function show(){
     var overLay = document.createElement('div');
     overLay.setAttribute("id","overLay");
@@ -169,7 +169,7 @@ function show(){
 ```
 
 In this case, centering process can be function. Please create center function.
-```
+```JavaScript
 function center(elem){
     var height = elem.clientHeight;
     var width = elem.clientWidth;
@@ -180,12 +180,12 @@ function center(elem){
 }
 ```
 And include center function in show function. Add this line.
-```
+```JavaScript
 center(modal);
 ```
 
 All JavaScript code
-```
+```JavaScript
 var modal = document.getElementById('modalWindow');
 var open = document.getElementById('open');
 var close = document.getElementById('close');
