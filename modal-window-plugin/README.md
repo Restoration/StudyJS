@@ -139,3 +139,83 @@ function hide(){
 open.addEventListener('click',show);
 close.addEventListener('click',hide);
 ```
+
+## Step.3
+Modal window needs centerling. To element should be add css style.
+```
+position absolute;
+top: 50%;
+left: 50%;
+margin-top: -(element height / 2) px;
+margin-left: -(element width / 2) px;
+```
+Therefore, adding style source in show function.
+```
+function show(){
+    var overLay = document.createElement('div');
+    overLay.setAttribute("id","overLay");
+    document.body.append(overLay);
+    overLay.addEventListener('click',hide);
+    modal.style.display = "block";
+
+    // start the center process from here
+    var height = modal.clientHeight;
+    var width = modal.clientWidth;
+    modal.style.top = '50%';
+    modal.style.left = '50%';
+    modal.style.marginTop = '-'+(height/2)+'px';
+    modal.style.marginLeft = '-'+(width/2)+'px';
+}
+```
+
+In this case, centering process can be function. Please create center function.
+```
+function center(elem){
+    var height = elem.clientHeight;
+    var width = elem.clientWidth;
+    elem.style.top = '50%';
+    elem.style.left = '50%';
+    elem.style.marginTop = '-'+(height/2)+'px';
+    elem.style.marginLeft = '-'+(width/2)+'px';
+}
+```
+And include center function in show function. Add this line.
+```
+center(modal);
+```
+
+All JavaScript code
+```
+var modal = document.getElementById('modalWindow');
+var open = document.getElementById('open');
+var close = document.getElementById('close');
+
+function show(){
+    var overLay = document.createElement('div');
+    overLay.setAttribute("id","overLay");
+    document.body.append(overLay);
+    overLay.addEventListener('click',hide);
+    modal.style.display = "block";
+    center(modal);
+}
+
+function hide(){
+    overLay.remove();
+    modal.style.display = "none";
+}
+
+function center(elem){
+    var height = elem.clientHeight;
+    var width = elem.clientWidth;
+    elem.style.top = '50%';
+    elem.style.left = '50%';
+    elem.style.marginTop = '-'+(height/2)+'px';
+    elem.style.marginLeft = '-'+(width/2)+'px';
+}
+
+open.addEventListener('click',show);
+close.addEventListener('click',hide);
+```
+
+In today's lesson. We practiced adding css style to element and adding DOM control. We made a confusing modal window to understand JavaScript. There are many simpler things than this. If you wanna study 
+more basic Web UI using JavaScript, It's convenient to use such a [site](https://www.w3schools.com/js/default.asp).
