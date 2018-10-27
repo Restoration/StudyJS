@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Drag&Drop</title>
 </head>
 <body>
 <style>
-#ddArea{
+#drop-area{
     width: 80%;
     min-height: 300px;
     margin: 0 auto;
     border: dashed 2px #dddddd;
+    background: rgba(128,128,128,0.6);
     text-align: center;
     display: -webkit-flex;
     display: flex;
@@ -21,9 +22,13 @@
 }
 </style>
 
-<div id="ddArea" draggable="true">
+
+<div id="drop-area">
     <p>Just drag and drop fires here.</p>
 </div>
+<ul id="image-list">
+</ul>
 
+<script src="function.js"></script>
 </body>
 </html>
