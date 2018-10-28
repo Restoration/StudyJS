@@ -246,6 +246,6 @@ dropArea.addEventListener('drop', dropEvent);
 ```
 
 
-[HTML Drag and Drop API](https://developer.mozilla.org/ja/docs/Web/API/HTML_Drag_and_Drop_API)
-[createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL)
-[revokeObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL)
+- [HTML Drag and Drop API](https://developer.mozilla.org/ja/docs/Web/API/HTML_Drag_and_Drop_API)
+- [createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL)
+- [revokeObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL)

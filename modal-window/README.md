@@ -78,7 +78,6 @@ The handler function is to bind object and event that is define.
 
 ```JavaScript
 var modal = document.getElementById('modalWindow');
-var overLay = document.getElementById('overLay');
 var open = document.getElementById('open');
 var close = document.getElementById('close');
 
