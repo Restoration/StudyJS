@@ -1,6 +1,6 @@
-const dropArea = document.getElementById('drop-area');
-const maxSize = 20 * 1024 * 1024; // image file  max size 20MB
-const listArea = document.getElementById('image-list');
+let dropArea = document.getElementById('drop-area');
+let maxSize = 20 * 1024 * 1024; // image file  max size 20MB
+let listArea = document.getElementById('image-list');
 
 function leaveEvent(){
     dropArea.style.backgroundColor = 'rgba(128,128,128,0.6)';
@@ -47,6 +47,6 @@ function renderImage(blob) {
     });
 }
 
-dropArea.addEventListener('dragleave', leaveEvent, false);
-dropArea.addEventListener('dragover', overEvent, false);
-dropArea.addEventListener('drop', dropEvent, false);
+dropArea.addEventListener('dragleave', leaveEvent);
+dropArea.addEventListener('dragover', overEvent);
+dropArea.addEventListener('drop', dropEvent);
