@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class Tarot  extends React.Component {
+    constructor(props) {
+    super(props);
+    }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    render() {
+        return (
+            <div>
+                <ul>
+                  <li id="past"></li>
+                  <li id="present"></li>
+                  <li id="future"></li>
+                </ul>
+                <button id="shuffle">
+                    Shuffle
+                </button>
+            </div>
+        );
+    }
+}
+ReactDOM.render(
+    <Tarot />,
+    document.getElementById('root')
+);
