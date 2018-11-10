@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 /*
+ * Japanese
  * meaning, front, back
  *
  * */
+/*
 const card  = [
     ["愚者","冒険・無知","軽率・愚考"],
     ["魔術師","創造・手腕","臆病・詐欺"],
@@ -28,6 +30,33 @@ const card  = [
     ["太陽","輝く未来・満足","延期・失敗"],
     ["審判","復活・改善","再起不能・後悔"],
     ["世界","完成・完全","未完成・中途半端"],
+];
+let btn = ["シャッフル","過去","現在","未来","リセット"];
+*/
+
+const card  = [
+    ["The Fool", "Adventure / Ignorance", "Cruelty / Ignorance"],
+    ["The Magician", "creation / skill", "cowardice / fraud"],
+    ["The High Priestess", "knowledge / intelligence", "cruel / selfish"],
+    ["The Empress", "Fertility / Maternity", "Excess / Vanity"],
+    ["The Emperor", "Responsibility / Paternity", "Arrogance / Respect"],
+    ["The Hierophant", "teach / generosity", "narrow / lazy"],
+    ["The Lovers", "Romance / Pleasure", "Jealousy / Betrayal"],
+    ["The Chariot", "Forward / Victory", "Runaway / Failure"],
+    ["Strength", "Power / Courage", "Nature / Confidence"],
+    ["The Hermit", "Discovery / Thoughtfulness", "Shady / Closed / Greedy"],
+    ["Wheel of Fortune", "opportunity / temporary good fortune", "miscalculation / bad luck"],
+    ["Justice", "Balance / Legitimate", "Prejudice / Fraud"],
+    ["The Hanged Man", "self-sacrifice / patience", "meaningless sacrifice / blind"],
+    ["Death", "Stop / Loss", "Reproduction / Redo from Death"],
+    ["Temperance", "Harmony / Stability", "Waste / Instability"],
+    ["The Devil", "Nuisance / Bondage / Falling", "Wakefulness from the Vicious Circle"],
+    ["The Tower", "destruction / destruction", "required destruction"],
+    ["The Stars", "hope / adore", "disillusionment / sorrow"],
+    ["The Moon", "Anxiety, Ambiguity, Chaos", "Anxiety Disappearance / Clear / End of Chaos"],
+    ["The Sun", "Shining Future / Satisfaction", "Postponement / Failure"],
+    ["Judgement", "Resurrection / Improvement", "Restless Repatriation / Regret"],
+    ["The World", "completed / complete", "incomplete / halfway"],
 ];
 let btn = ["Shuffle","Past","Present","Future","Reset"];
 let deck = card;
@@ -69,7 +98,8 @@ class Tarot  extends React.Component {
             return false;
         }
         var r = Math.floor(Math.random() * 2 + 1);
-        var meaning = deck[count-1][0] + (r == 1 ? "表" : "裏") + " " + deck[count-1][r];
+        var meaning = deck[count-1][0] + " " + (r == 1 ? "Front" : "Back") + " " + deck[count-1][r];
+        //var meaning = deck[count-1][0] + " " + (r == 1 ? "表" : "裏") + " " + deck[count-1][r];
         result.push(meaning);
         this.setState({
             result: result,
@@ -79,9 +109,9 @@ class Tarot  extends React.Component {
         return (
             <div>
                 <ul>
-                  <li id="past">{this.state.result[0]}</li>
-                  <li id="present">{this.state.result[1]}</li>
-                  <li id="future">{this.state.result[2]}</li>
+                  <li>{btn[1]}: {this.state.result[0]}</li>
+                  <li>{btn[2]}: {this.state.result[1]}</li>
+                  <li>{btn[3]}: {this.state.result[2]}</li>
                 </ul>
                 <button onClick={this.clickHandler.bind(this)}>{this.state.btnStr}</button>
             </div>
