@@ -34,54 +34,52 @@ const deck = card;
 class Tarot  extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             past: null,
             present: null,
             future: null,
             btnStr: "Shuffle",
+            count: 0,
         };
     }
     clickHandler(){
-        var past,present,future;
-        switch(this.state.btnStr){
-            case "Shuffle":
-                var button = "Past";
+        var count = this.state.count;
+        switch(count){
+            case 0:
                 for(var i = deck.length - 1; i > 0; i--){
                     var r = Math.floor(Math.random() * (i + 1));
                     var tmp = deck[i];
                     deck[i] = deck[r];
                     deck[r] = tmp;
                 }
+                this.setState({
+                    btnStr: "Past",
+                });
             break;
-            case "Past":
-                var button = "Present";
-                var r = Math.floor(Math.random() * 2 + 1);
-                var result = deck[0][0];
-                var meaning = (r == 1 ? "表" : "裏") + deck[0][r];
-                past = result +" "+ meaning;
+            case 1:
+                var result = draw(deck,count-1);
+                this.setState({
+                    btnStr: "Present",
+                    past: result,
+                });
             break;
-            case "Present":
-                var button = "Future";
-                var r = Math.floor(Math.random() * 2 + 1);
-                var result = deck[1][0];
-                var meaning = (r == 1 ? "表" : "裏") + deck[1][r];
-                present = result +" "+ meaning;
+            case 2:
+                var result = draw(deck,count-1);
+                this.setState({
+                    btnStr: "Future",
+                    present: result,
+                });
             break;
-            case "Future":
-                var button = "Done";
-                var r = Math.floor(Math.random() * 2 + 1);
-                var result = deck[1][0];
-                var meaning = (r == 1 ? "表" : "裏") + deck[1][r];
-                future = result +" "+ meaning;
+            case 3:
+                var result = draw(deck,count-1);
+                this.setState({
+                    btnStr: "Done",
+                    future: result,
+                });
             break;
-            default:
-                return false;
         }
         this.setState({
-            btnStr: button,
-            past: past,
-            present: present,
+            count: count+1,
         });
     }
     render() {
@@ -96,6 +94,13 @@ class Tarot  extends React.Component {
             </div>
         );
     }
+}
+
+function draw(deck,i){
+    var r = Math.floor(Math.random() * 2 + 1);
+    var result = deck[i][0];
+    var meaning = (r == 1 ? "表" : "裏") + " " + deck[i][r];
+    return result +" "+ meaning;
 }
 
 
