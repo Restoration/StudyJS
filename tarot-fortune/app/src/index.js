@@ -29,21 +29,26 @@ const card  = [
     ["審判","復活・改善","再起不能・後悔"],
     ["世界","完成・完全","未完成・中途半端"],
 ];
+let btn = ["Shuffle","Past","Present","Future","Reset"];
 let deck = card;
+let result = [];
 
 class Tarot  extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            past: null,
-            present: null,
-            future: null,
-            btnStr: "Shuffle",
+            result: [],
+            btnStr: btn[0],
             count: 0,
         };
     }
     clickHandler(){
         var count = this.state.count;
+        var btnString = btn[count+1];
+        this.setState({
+            btnStr: btnString,
+            count: count + 1,
+        });
         if(count == 0){
             for(var i = deck.length - 1; i > 0; i--){
                 var r = Math.floor(Math.random() * (i + 1));
@@ -51,68 +56,38 @@ class Tarot  extends React.Component {
                 deck[i] = deck[r];
                 deck[r] = tmp;
             }
+            return false;
+        }
+        if(count == 4){
+            deck = card;
+            result = [];
             this.setState({
-                btnStr: "Past",
-                count: count + 1,
+                result: [],
+                btnStr: btn[0],
+                count: 0,
             });
             return false;
         }
-        var result = draw(deck,count-1);
-        switch(count){
-            case 1:
-                this.setState({
-                    btnStr: "Present",
-                    past: result,
-                    count: count + 1,
-                });
-            break;
-            case 2:
-                this.setState({
-                    btnStr: "Future",
-                    present: result,
-                    count: count + 1,
-                });
-            break;
-            case 3:
-                this.setState({
-                    btnStr: "Reset",
-                    future: result,
-                    count: count + 1,
-                });
-            break;
-            case 4:
-                deck = card;
-                this.setState({
-                    past: "",
-                    present: "",
-                    future: "",
-                    btnStr: "Shuffle",
-                    count: 0,
-                });
-            break;
-        }
+        var r = Math.floor(Math.random() * 2 + 1);
+        var meaning = deck[count-1][0] + (r == 1 ? "表" : "裏") + " " + deck[count-1][r];
+        result.push(meaning);
+        this.setState({
+            result: result,
+        });
     }
     render() {
         return (
             <div>
                 <ul>
-                  <li id="past">{this.state.past}</li>
-                  <li id="present">{this.state.present}</li>
-                  <li id="future">{this.state.future}</li>
+                  <li id="past">{this.state.result[0]}</li>
+                  <li id="present">{this.state.result[1]}</li>
+                  <li id="future">{this.state.result[2]}</li>
                 </ul>
                 <button onClick={this.clickHandler.bind(this)}>{this.state.btnStr}</button>
             </div>
         );
     }
 }
-
-function draw(deck,i){
-    var r = Math.floor(Math.random() * 2 + 1);
-    var result = deck[i][0];
-    var meaning = (r == 1 ? "表" : "裏") + " " + deck[i][r];
-    return result +" "+ meaning;
-}
-
 
 ReactDOM.render(
     <Tarot />,
