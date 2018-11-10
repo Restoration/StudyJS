@@ -29,6 +29,8 @@ const card  = [
     ["審判","復活・改善","再起不能・後悔"],
     ["世界","完成・完全","未完成・中途半端"],
 ];
+const deck = card;
+
 class Tarot  extends React.Component {
     constructor(props) {
         super(props);
@@ -40,27 +42,46 @@ class Tarot  extends React.Component {
             btnStr: "Shuffle",
         };
     }
-    clickHandler(e){
-        let array = card;
-        shuffle(array);
+    clickHandler(){
+        var past,present,future;
         switch(this.state.btnStr){
             case "Shuffle":
                 var button = "Past";
+                for(var i = deck.length - 1; i > 0; i--){
+                    var r = Math.floor(Math.random() * (i + 1));
+                    var tmp = deck[i];
+                    deck[i] = deck[r];
+                    deck[r] = tmp;
+                }
             break;
             case "Past":
                 var button = "Present";
+                var r = Math.floor(Math.random() * 2 + 1);
+                var result = deck[0][0];
+                var meaning = (r == 1 ? "表" : "裏") + deck[0][r];
+                past = result +" "+ meaning;
             break;
             case "Present":
                 var button = "Future";
+                var r = Math.floor(Math.random() * 2 + 1);
+                var result = deck[1][0];
+                var meaning = (r == 1 ? "表" : "裏") + deck[1][r];
+                present = result +" "+ meaning;
             break;
             case "Future":
                 var button = "Done";
+                var r = Math.floor(Math.random() * 2 + 1);
+                var result = deck[1][0];
+                var meaning = (r == 1 ? "表" : "裏") + deck[1][r];
+                future = result +" "+ meaning;
             break;
             default:
                 return false;
         }
         this.setState({
             btnStr: button,
+            past: past,
+            present: present,
         });
     }
     render() {
@@ -75,16 +96,6 @@ class Tarot  extends React.Component {
             </div>
         );
     }
-}
-
-function shuffle(array){
-    for(var i = array.length - 1; i > 0; i--){
-        var r = Math.floor(Math.random() * (i + 1));
-        var tmp = array[i];
-        array[i] = array[r];
-        array[r] = tmp;
-    }
-    return array;
 }
 
 
