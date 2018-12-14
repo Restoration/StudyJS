@@ -9,22 +9,26 @@ class extSlideShow{
 		let element = document.getElementById("extSlideShow");
 
 		// image list
-
+ 		let ulEl = document.createElement("ul");
 		for(let i=0; i < this.obj.length; i++){
+ 			let liEl = document.createElement("li");
 			let imgEl = document.createElement("img");
 			imgEl.setAttribute("alt", this.obj[i].title);
 			imgEl.setAttribute("src", this.obj[i].imgPath);
-			element.appendChild(imgEl);
+
+			liEl.appendChild(imgEl);
+			ulEl.appendChild(liEl);
+
+
 		}
+			element.appendChild(ulEl);
 
 		// Button
 		let leftBtn = document.createElement("button");
 		leftBtn.setAttribute("id", "leftBtn");
-		leftBtn.innerHTML = '&#x2039;';
 
 		let rightBtn = document.createElement("button");
 		rightBtn.setAttribute("id", "rightBtn");
-		rightBtn.innerHTML = '&#x203a;';
 
 		element.appendChild(leftBtn);
 		element.appendChild(rightBtn);

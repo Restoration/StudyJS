@@ -3,8 +3,56 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Slide Show</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
+
+
+<style type="text/css">
+#extSlideShow{
+	position: relative;
+	margin: 0 auto;
+	width: 640px;
+	height: 425px;
+	border: solid 2px solid #666;
+}
+#extSlideShow img{
+	position: absolute;
+	width: 640px;
+	height: 425px;
+}
+#leftBtn,
+#rightBtn{
+	position: absolute;
+	z-index: 1000;
+	top: 50%;
+	border: 0;
+	background: 0;
+    font-size: 30px;
+    color: #fff;
+}
+
+#rightBtn{
+	right: 10px;
+}
+#leftBtn{
+	left: 10px;
+}
+</style>
+
+
+
+<!--
+<div id="extSlideShow">
+    <img src="http://farm9.staticflickr.com/8072/8346734966_f9cd7d0941_z.jpg" />
+    <img src="http://farm9.staticflickr.com/8504/8365873811_d32571df3d_z.jpg" />
+    <img src="http://farm9.staticflickr.com/8068/8250438572_d1a5917072_z.jpg" />
+    <img src="http://farm9.staticflickr.com/8061/8237246833_54d8fa37f0_z.jpg" />
+    <img src="http://farm9.staticflickr.com/8055/8098750623_66292a35c0_z.jpg" />
+    <img src="http://farm9.staticflickr.com/8195/8098750703_797e102da2_z.jpg" />
+</div>
+-->
+
 
 <div id="extSlideShow"></div>
 <script type="text/javascript" src="js/extSlideShowClass.js"></script>
