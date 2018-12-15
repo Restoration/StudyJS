@@ -1,21 +1,18 @@
 class extSlideShow{
 	constructor(obj) {
 		this.obj = obj;
+		this.current = 0;
 		this.userInterface();
-		this.nextClick();
-		this.prevClick();
 	}
 	userInterface(){
 		let element = document.getElementById("extSlideShow");
 
-		// image list
-
-		for(let i=0; i < this.obj.length; i++){
-			let imgEl = document.createElement("img");
-			imgEl.setAttribute("alt", this.obj[i].title);
-			imgEl.setAttribute("src", this.obj[i].imgPath);
-			element.appendChild(imgEl);
-		}
+		// Image Content
+		let imgEl = document.createElement("img");
+		imgEl.setAttribute("id", "view");
+		imgEl.setAttribute("alt", this.obj[this.current].title);
+		imgEl.setAttribute("src", this.obj[this.current].imgPath);
+		element.appendChild(imgEl);
 
 		// Button
 		let leftBtn = document.createElement("button");
@@ -28,9 +25,20 @@ class extSlideShow{
 
 		element.appendChild(leftBtn);
 		element.appendChild(rightBtn);
+
+		// Event handler
+		rightBtn.addEventListener('click', () => this.nextClick());
+		rightBtn.addEventListener('click', () => this.prevClick());
+
+
+	}
+	renderImage(number){
+		let element = document.getElementById("view");
+		console.log(element);
+		element.setAttribute("alt", this.obj[number].title);
+		element.setAttribute("src", this.obj[number].imgPath);
 	}
 	nextClick(){
-
 	}
 	prevClick(){
 

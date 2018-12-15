@@ -85,12 +85,11 @@ JSのメソッドを使ってNodeを生成します。
 ```JavaScript
 userInterface(){
 		// Image Content
-		for(let i=0; i < this.obj.length; i++){
-			let imgEl = document.createElement("img");
-			imgEl.setAttribute("alt", this.obj[i].title);
-			imgEl.setAttribute("src", this.obj[i].imgPath);
-			element.appendChild(imgEl);
-		}
+		let imgEl = document.createElement("img");
+		imgEl.setAttribute("id", "view");
+		imgEl.setAttribute("alt", this.obj[this.current].title);
+		imgEl.setAttribute("src", this.obj[this.current].imgPath);
+		element.appendChild(imgEl);
 }
 ```
 これで画像を表示することができました。
@@ -108,6 +107,23 @@ userInterface(){
 	element.appendChild(rightBtn);
 ```
 
+ここでイベントハンドラーを付け加えます
+rightBtnとleftBtnにaddEventListnerで紐付けます
+ここで注意してほしいことがあります従来のES5の書き方でイベントを紐づけるとクラス読み込み時に処理が通ってしまいます
+したがってクリックをしてないにも関わらずクリックイベントが実行されます
+以下のように書いてください
+```
+		// Event handler
+		// This is ES5
+		// rightBtn.addEventListener("click", this.nextClick(),false);
+		// leftBtn.addEventListener("click", this.prevClick(),false);
+		
+		// This is ES6
+		rightBtn.addEventListener('click', () => this.nextClick());
+		rightBtn.addEventListener('click', () => this.prevClick());
+
+
+
 出来上がったコードは以下
 Userinterface method code
 ```JavaScript
@@ -115,12 +131,12 @@ userInterface(){
 	let element = document.getElementById("extSlideShow");
 
 	// Image Content
-	for(let i=0; i < this.obj.length; i++){
-		let imgEl = document.createElement("img");
-		imgEl.setAttribute("alt", this.obj[i].title);
-		imgEl.setAttribute("src", this.obj[i].imgPath);
-		element.appendChild(imgEl);
-	}
+	let imgEl = document.createElement("img");
+	imgEl.setAttribute("id", "view");
+	imgEl.setAttribute("alt", this.obj[this.current].title);
+	imgEl.setAttribute("src", this.obj[this.current].imgPath);
+	element.appendChild(imgEl);
+
 	
 	// Button
 	let leftBtn = document.createElement("button");
@@ -134,6 +150,9 @@ userInterface(){
 	element.appendChild(leftBtn);
 	element.appendChild(rightBtn);
 
+		// Event handler
+		rightBtn.addEventListener('click', () => this.nextClick());
+		rightBtn.addEventListener('click', () => this.prevClick());
 }
 ```
 
@@ -172,6 +191,18 @@ userInterface(){
 	left: 10px;
 }
 ```
+
+
+次に配列からオブジェクトを参照して画像を表示させるためのメソッドを作ります
+このメソッドを通すことによって新しい画像に差し替えます
+```
+	renderImage(number){
+		let element = document.getElementById("extSlideShow").child("img");
+		element.setAttribute("alt", this.obj[number].title);
+		element.setAttribute("src", this.objnumber.imgPath);
+	}
+```
+
 
 
 # nextClick method
