@@ -28,7 +28,7 @@ class extSlideShow{
 
 		// Event handler
 		rightBtn.addEventListener('click', () => this.nextClick());
-		rightBtn.addEventListener('click', () => this.prevClick());
+		leftBtn.addEventListener('click', () => this.prevClick());
 
 	}
 	renderImage(number){
@@ -43,11 +43,15 @@ class extSlideShow{
 		}else {
 			this.current = 0;
 		}
-		console.log(this.current);
 		this.renderImage(this.current);
 	}
 	prevClick(){
-
+		if (this.current == 0) {
+			this.current = this.obj.length -1;
+		} else {
+			this.current--;
+		}
+		this.renderImage(this.current);
 	}
 }
 

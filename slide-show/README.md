@@ -44,7 +44,7 @@ prevClick(){
 
 コンストラクタを以下のように書きます。
 コンストラクタ内でユーザーインターフェースを作る処理とスライドショーの現在の番号を定義しておきます。
-```
+```JavaScript
 	constructor(obj) {
 		this.obj = obj;
 		this.current = 0;
@@ -58,7 +58,7 @@ prevClick(){
 そしてクラスを呼び出してください
 このクラスを呼び出すには以下の処理を書く必要があります。
 ※このオブジェクトの構造に関してはスラックで送る
-```
+```JavaScript
 let obj = [
 	{
 		"title": "Image 1",
@@ -110,7 +110,7 @@ rightBtnとleftBtnにaddEventListnerで紐付けます
 ここで注意してほしいことがあります従来のES5の書き方でイベントを紐づけるとクラス読み込み時に処理が通ってしまいます
 したがってクリックをしてないにも関わらずクリックイベントが実行されます
 以下のように書いてください
-```
+```JavaScript
 		// Event handler
 		// This is ES5
 		// rightBtn.addEventListener("click", this.nextClick(),false);
@@ -118,7 +118,7 @@ rightBtnとleftBtnにaddEventListnerで紐付けます
 		
 		// This is ES6
 		rightBtn.addEventListener('click', () => this.nextClick());
-		rightBtn.addEventListener('click', () => this.prevClick());
+		leftBtn.addEventListener('click', () => this.prevClick());
 ```
 
 
@@ -148,9 +148,9 @@ userInterface(){
 	element.appendChild(leftBtn);
 	element.appendChild(rightBtn);
 
-		// Event handler
-		rightBtn.addEventListener('click', () => this.nextClick());
-		rightBtn.addEventListener('click', () => this.prevClick());
+	// Event handler
+	rightBtn.addEventListener('click', () => this.nextClick());
+	leftBtn.addEventListener('click', () => this.prevClick());
 }
 ```
 
@@ -193,7 +193,7 @@ userInterface(){
 # renderImage method
 次に配列からオブジェクトを参照して画像を表示させるためのメソッドを作ります
 このメソッドを通すことによって新しい画像に差し替えます
-```
+```JavaScript
 	renderImage(number){
 		let element = document.getElementById("extSlideShow").child("img");
 		element.setAttribute("alt", this.obj[number].title);
@@ -202,7 +202,7 @@ userInterface(){
 ```
 
 ためしにイベントを実行してみましょう。以下のようにして実行してみましょう。
-```
+```JavaScript
 	nextClick(){
 		this.renderImage(2);
 	}
@@ -213,26 +213,114 @@ userInterface(){
 # nextClick method
 次に進むためのクリックイベントの作成をしていきます。クリックされるごとにコンストラクタ内で定義しているcurrentをインクリメントします。
 しかしインクリメントするだけではダメです。スライドショーの枚数の最大まできたらインクリメントさせないという制限をしなければいけません。
-```
+```JavaScript
 	nextClick(){
 		if(this.current < this.obj.length -1){
 			this.current++;
 		}else {
 			this.current = 0;
 		}
-		console.log(this.current);
 		this.renderImage(this.current);
 	}
 ```
 最初にthis.objから-1した数に対してcurrentが少ない場合はthis.currentをインクリメントさせます。
 もしそうでなかった場合は（currentがobjの最大数よりも大きい場合）は0にリセットします。
-最後にrenderImageに
+最後にrenderImageに渡します。
 
 
 # prevClick method
 前に戻るためのクリックイベントの作成をしていきます。戻るイベントはnextClickイベントの逆でcurrentをデクリメントさせることによって画像を入れ替えます。
+ここでも制限をかける必要があります。配列は0始まりという制約があるため少しややこしくなっていまいます。
+もしも0だった場合はthis.objの最大の数から-1した数をthis.currentに入れます。
+
+```JavaScript
+	prevClick(){
+		if (this.current == 0) {
+			this.current = this.obj.length -1;
+		} else {
+			this.current--;
+		}
+		this.renderImage(this.current);
+	}
+```
 
 # All code
+```JavaScript
+class extSlideShow{
+	constructor(obj) {
+		this.obj = obj;
+		this.current = 0;
+		this.userInterface();
+	}
+	userInterface(){
+		let element = document.getElementById("extSlideShow");
+
+		// Image Content
+		let imgEl = document.createElement("img");
+		imgEl.setAttribute("id", "view");
+		imgEl.setAttribute("alt", this.obj[this.current].title);
+		imgEl.setAttribute("src", this.obj[this.current].imgPath);
+		element.appendChild(imgEl);
+
+		// Button
+		let leftBtn = document.createElement("button");
+		leftBtn.setAttribute("id", "leftBtn");
+		leftBtn.innerHTML = '&#x2039;';
+
+		let rightBtn = document.createElement("button");
+		rightBtn.setAttribute("id", "rightBtn");
+		rightBtn.innerHTML = '&#x203a;';
+
+		element.appendChild(leftBtn);
+		element.appendChild(rightBtn);
+
+		// Event handler
+		rightBtn.addEventListener('click', () => this.nextClick());
+		leftBtn.addEventListener('click', () => this.prevClick());
+
+	}
+	renderImage(number){
+		let element = document.getElementById("view");
+		console.log(element);
+		element.setAttribute("alt", this.obj[number].title);
+		element.setAttribute("src", this.obj[number].imgPath);
+	}
+	nextClick(){
+		if(this.current < this.obj.length -1){
+			this.current++;
+		}else {
+			this.current = 0;
+		}
+		this.renderImage(this.current);
+	}
+	prevClick(){
+		if (this.current == 0) {
+			this.current = this.obj.length -1;
+		} else {
+			this.current--;
+		}
+		this.renderImage(this.current);
+	}
+}
+
+
+let images = [
+	{
+		"title": "Image 1",
+		"imgPath": "./img/image-1.jpg",
+	},
+	{
+		"title": "Image 2",
+		"imgPath": "./img/image-2.jpg",
+	},
+	{
+		"title": "Image 3",
+		"imgPath": "./img/image-3.jpg",
+	}
+];
+
+new extSlideShow(images);
+```
 
 配列を用意したのは画像のパスとタイトルをひとまとめにして管理をしやすくするためです。
 このスライドショーを応用すればまた違った内容のものを作ることも可能です。
