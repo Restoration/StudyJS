@@ -22,8 +22,6 @@ Class extSlideShow{
 ```
 
 
-
-
 Please define method.
 Make userinterface method to make user interface.
 
@@ -44,13 +42,13 @@ prevClick(){
 }
 ```
 
-すべての関数を自動化させるためにコンストラクタを以下のように書きます
+コンストラクタを以下のように書きます。
+コンストラクタ内でユーザーインターフェースを作る処理とスライドショーの現在の番号を定義しておきます。
 ```
 	constructor(obj) {
 		this.obj = obj;
+		this.current = 0;
 		this.userInterface();
-		this.nextClick();
-		this.prevClick();
 	}
 ```
 
@@ -121,7 +119,7 @@ rightBtnとleftBtnにaddEventListnerで紐付けます
 		// This is ES6
 		rightBtn.addEventListener('click', () => this.nextClick());
 		rightBtn.addEventListener('click', () => this.prevClick());
-
+```
 
 
 出来上がったコードは以下
@@ -192,7 +190,7 @@ userInterface(){
 }
 ```
 
-
+# renderImage method
 次に配列からオブジェクトを参照して画像を表示させるためのメソッドを作ります
 このメソッドを通すことによって新しい画像に差し替えます
 ```
@@ -203,17 +201,40 @@ userInterface(){
 	}
 ```
 
+ためしにイベントを実行してみましょう。以下のようにして実行してみましょう。
+```
+	nextClick(){
+		this.renderImage(2);
+	}
+```
+
 
 
 # nextClick method
-次に進むためのクリックイベントの作成をしていきます
+次に進むためのクリックイベントの作成をしていきます。クリックされるごとにコンストラクタ内で定義しているcurrentをインクリメントします。
+しかしインクリメントするだけではダメです。スライドショーの枚数の最大まできたらインクリメントさせないという制限をしなければいけません。
+```
+	nextClick(){
+		if(this.current < this.obj.length -1){
+			this.current++;
+		}else {
+			this.current = 0;
+		}
+		console.log(this.current);
+		this.renderImage(this.current);
+	}
+```
+最初にthis.objから-1した数に対してcurrentが少ない場合はthis.currentをインクリメントさせます。
+もしそうでなかった場合は（currentがobjの最大数よりも大きい場合）は0にリセットします。
+最後にrenderImageに
+
 
 # prevClick method
-前に戻るためのクリックイベントの作成をしていきます
+前に戻るためのクリックイベントの作成をしていきます。戻るイベントはnextClickイベントの逆でcurrentをデクリメントさせることによって画像を入れ替えます。
 
 # All code
 
 配列を用意したのは画像のパスとタイトルをひとまとめにして管理をしやすくするためです。
-実際にはuserinterfaceメソッドを実装せずにスクラッチでur li imgタグを書いてスライドショーを使ってもらっても大丈夫です。
-
-さらに今回は応用をしてインスタグラムと連携させたものをつくる
+このスライドショーを応用すればまた違った内容のものを作ることも可能です。
+以前、Instagram APIを使用して画像を表示させるところまで作りました。これを応用してInstagramから取得したオブジェクトをスライドショーの引数に渡し、構造を変更することでInstagramのスライドショーを作成することもできます。
+またモーダルウィンドウと兼ね合わせて作成してみるなど応用して勉強してみるのもいいかもしれません。

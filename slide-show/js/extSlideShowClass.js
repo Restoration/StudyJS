@@ -30,7 +30,6 @@ class extSlideShow{
 		rightBtn.addEventListener('click', () => this.nextClick());
 		rightBtn.addEventListener('click', () => this.prevClick());
 
-
 	}
 	renderImage(number){
 		let element = document.getElementById("view");
@@ -39,6 +38,13 @@ class extSlideShow{
 		element.setAttribute("src", this.obj[number].imgPath);
 	}
 	nextClick(){
+		if(this.current < this.obj.length -1){
+			this.current++;
+		}else {
+			this.current = 0;
+		}
+		console.log(this.current);
+		this.renderImage(this.current);
 	}
 	prevClick(){
 
