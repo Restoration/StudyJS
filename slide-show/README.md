@@ -30,7 +30,13 @@ Let's study ES6 together.
 ## Class and Constructor
 Before lesson I taught function base coding to make Modal Window. But this lesson will use class, becaouse Class base coding is to easy understand.
 First one, define Class.
+
+`"use strict";` means to use strict mode to writing more rigorous code.
+
+[strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)
+
 ```JavaScript
+"use strict";
 Class extSlideShow{
 	constructor() {
 	}
@@ -67,8 +73,8 @@ prevClick(){
 }
 ```
 
-コンストラクタを以下のように書きます。
-コンストラクタ内でユーザーインターフェースを作る処理とスライドショーの現在の番号を定義しておきます。
+
+Please prepare contractor,  the node target to insert,the images object, a current variable of slideshow number and to make user interface process.
 ```JavaScript
 	constructor(target,obj) {
 		this.target = target;
@@ -78,12 +84,7 @@ prevClick(){
 	}
 ```
 
-では実際に処理を通していきます。
-画像用のオブジェクトを渡す必要があります
-配列に画像の名前とパスを格納したオブジェクトを用意します
-そしてクラスを呼び出してください
-このクラスを呼び出すには以下の処理を書く必要があります。
-※このオブジェクトの構造に関してはスラックで送る
+I'll make a execute process which needs the target id and image object.
 ```JavaScript
 let obj = [
 	{
@@ -99,8 +100,7 @@ let obj = [
 		"imgPath": "./img/image-3.jpg",
 	}
 ];
-
-new extSlideShow("#extSlideShow",obj);
+const slide = new extSlideShow("#extSlideShow",obj);
 ```
 Now you can use an array containing images.
 
@@ -177,7 +177,7 @@ The userinterface method all code.
 	}
 ```
 
-##  Stylesheed
+##  Stylesheet
 The next, please create stylesheet, you have to design slideshow.
 ```CSS
 #extSlideShow{
@@ -334,8 +334,7 @@ let obj = [
 		"imgPath": "./img/image-3.jpg",
 	}
 ];
-
-new extSlideShow("#extSlideShow",obj);
+const slide = new extSlideShow("#extSlideShow",obj);
 ```
 I prepared arrays to make it easier to manage by grouping image paths and titles together. You can this slideshow apply to another thing.
 For example, We learned Instagram API, You can get image object from Instagram API, So If you put Instagram image object to the argument and changed the structure, You can create Instagram's slideshow.
