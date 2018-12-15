@@ -1,6 +1,8 @@
 # JavaScript SlideShow
 In this lesson, We are going to study slide show with JavaScript. Recently You can create good slide show with CSS only. But, We try to original slide show.
 Before, coding we have to understand how to make slide show.
+The slideshow has many ways to how to make.
+In this lesson, I chose the most simple way which replaces the image path.
 Don't worry! very easy!
 
 
@@ -36,10 +38,15 @@ Class extSlideShow{
 ```
 
 
-Please define method.
-Make userinterface method to make user interface.
+Please define all methods to easily understand.
+I'll explain these methods.
 
-わかりやすくするために最初にメソッドを定義してしまいます。
+|  Method Name  |  detail  |
+| ---- | ---- |
+|  userInterface  |  The userInterface method means to make UI, an image view area, prev, next button.  |
+|  renderImage  |  To change the image when a user clicks the prev button or next button. This function needs current image number, therefore I'll make argument later.  |
+|  nextClick  |  To change the next image when a user clicks.  |
+|  prevClick  |  To change the previous image when a user clicks.  |
 
 ```JavaScript
 // To create user interface
@@ -95,14 +102,10 @@ let obj = [
 
 new extSlideShow("#extSlideShow",obj);
 ```
-
-
-これで画像を格納した配列を使うことができるようになりました
+Now you can use an array containing images.
 
 ## userInterface method
-次にUIを作成します
-これらの画像情報を元にスライドショーの要素となるリストとコントローラーを作成し、#extSlideShowにインサートを行います
-JSのメソッドを使ってNodeを生成します。
+Then, I'll create user interface which is slideshow view area and button. Please create the HTML Node with JavaScript method.
 ```JavaScript
 userInterface(){
 		// Image Content
@@ -113,8 +116,8 @@ userInterface(){
 		element.appendChild(imgEl);
 }
 ```
-これで画像を表示することができました。
-同様に画像を送ったり戻ったりするためのコントローラーを生成します
+You can create the image from the object with the above code.
+Similarly, please create the button with below code.
 
 ```JavaScript
 	let leftBtn = document.createElement("button");
@@ -129,11 +132,9 @@ userInterface(){
 	element.appendChild(rightBtn);
 ```
 
-ここでイベントハンドラーを付け加えます
-rightBtnとleftBtnにaddEventListnerで紐付けます
-ここで注意してほしいことがあります従来のES5の書き方でイベントを紐づけるとクラス読み込み時に処理が通ってしまいます
-したがってクリックをしてないにも関わらずクリックイベントが実行されます
-以下のように書いてください
+In here, please add an event handler to the buttons.
+You can it with an addEventListner method, but you can't ES5 code.
+This is important point. You have to use ES6 code in Java ScriptClass, therefore please use arrow function code. If you use ES5 code, your functions execute. Even if you don't click, executed click function.
 ```JavaScript
 		// Event handler
 		// This is ES5
@@ -145,9 +146,7 @@ rightBtnとleftBtnにaddEventListnerで紐付けます
 		leftBtn.addEventListener('click', () => this.prevClick());
 ```
 
-
-出来上がったコードは以下
-Userinterface method code
+The userinterface method all code.
 ```JavaScript
 	userInterface(){
 		let element = document.querySelector(this.target);
@@ -178,10 +177,8 @@ Userinterface method code
 	}
 ```
 
-それでは表示ができたのでCSSを使って
-スライドショーのデザインをしていきます。
-style.cssを作成して以下のように書いてください。
-
+##  Stylesheed
+The next, please create stylesheet, you have to design slideshow.
 ```CSS
 #extSlideShow{
 	position: relative;
@@ -215,8 +212,7 @@ style.cssを作成して以下のように書いてください。
 ```
 
 ## renderImage method
-次に配列からオブジェクトを参照して画像を表示させるためのメソッドを作ります
-このメソッドを通すことによって新しい画像に差し替えます
+Then, reference an object from an array to display an image. The changing new image by using this method.
 ```JavaScript
 	renderImage(number){
 		let element = document.getElementById("extSlideShow").child("img");
@@ -225,8 +221,9 @@ style.cssを作成して以下のように書いてください。
 	}
 ```
 
-ためしにイベントを実行してみましょう。以下のようにして実行してみましょう。
-rightBtn押下時に画像が変更されます。
+
+Let's run the event as a trial. Let's execute it as follows.
+when you click rightBtn, It will change image.
 ```JavaScript
 	nextClick(){
 		this.renderImage(2);
@@ -234,8 +231,7 @@ rightBtn押下時に画像が変更されます。
 ```
 
 ## nextClick method
-次に進むためのクリックイベントの作成をしていきます。クリックされるごとにコンストラクタ内で定義しているcurrentをインクリメントします。
-しかしインクリメントするだけではダメです。スライドショーの枚数の最大まできたらインクリメントさせないという制限をしなければいけません。
+In this part, I'll create a click event to display the next image. increment to the current variable when the user clicks next button. Please, be careful,  you have to create a limit. If the current variable is the max, it has to be reset.
 ```JavaScript
 	nextClick(){
 		if(this.current < this.obj.length -1){
@@ -246,16 +242,11 @@ rightBtn押下時に画像が変更されます。
 		this.renderImage(this.current);
 	}
 ```
-最初にthis.objから-1した数に対してcurrentが少ない場合はthis.currentをインクリメントさせます。
-もしそうでなかった場合は（currentがobjの最大数よりも大きい場合）は0にリセットします。
-最後にrenderImageに渡します。
+If the current variable is small for the number minus 1 from the maximum value of obj first, increment current. If it is not the case (current is greater than the maximum number of obj), reset it to 0. Finally, You give the current variable to renderImage.
 
 
 ## prevClick method
-前に戻るためのクリックイベントの作成をしていきます。戻るイベントはnextClickイベントの逆でcurrentをデクリメントさせることによって画像を入れ替えます。
-ここでも制限をかける必要があります。配列は0始まりという制約があるため少しややこしくなっていまいます。
-もしも0だった場合はthis.objの最大の数から-1した数をthis.currentに入れます。
-
+The last part, Please make click event to display the previous image. The previous event totally opposite to next event. It uses decrement to the current variable and also, you have to create the limit.
 ```JavaScript
 	prevClick(){
 		if (this.current == 0) {
@@ -268,6 +259,7 @@ rightBtn押下時に画像が変更されます。
 ```
 
 ## All code
+
 ```JavaScript
 class extSlideShow{
 
@@ -306,7 +298,6 @@ class extSlideShow{
 	}
 	renderImage(number){
 		let element = document.getElementById("view");
-		console.log(element);
 		element.setAttribute("alt", this.obj[number].title);
 		element.setAttribute("src", this.obj[number].imgPath);
 	}
@@ -346,8 +337,5 @@ let obj = [
 
 new extSlideShow("#extSlideShow",obj);
 ```
-
-配列を用意したのは画像のパスとタイトルをひとまとめにして管理をしやすくするためです。
-このスライドショーを応用すればまた違った内容のものを作ることも可能です。
-以前、Instagram APIを使用して画像を表示させるところまで作りました。これを応用してInstagramから取得したオブジェクトをスライドショーの引数に渡し、構造を変更することでInstagramのスライドショーを作成することもできます。
-またモーダルウィンドウと兼ね合わせて作成してみるなど応用して勉強してみるのもいいかもしれません。
+I prepared arrays to make it easier to manage by grouping image paths and titles together. You can this slideshow apply to another thing.
+For example, We learned Instagram API, You can get image object from Instagram API, So If you put Instagram image object to the argument and changed the structure, You can create Instagram's slideshow.
