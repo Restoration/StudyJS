@@ -8,10 +8,24 @@ And this lesson use ES6.
 Let's study ES6 together.
 
 ```HTML
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Slide Show</title>
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
 
+<div id="extSlideShow"></div>
+
+<script type="text/javascript" src="js/extSlideShowClass.js"></script>
+
+</body>
+</html>
 ```
 
-
+## Class and Constructor
 Before lesson I taught function base coding to make Modal Window. But this lesson will use class, becaouse Class base coding is to easy understand.
 First one, define Class.
 ```JavaScript
@@ -32,6 +46,10 @@ Make userinterface method to make user interface.
 userInterface(){
 	
 }
+// To change slide image
+renderImage(){
+}
+	
 //  To show next image
 nextClick(){
 	
@@ -45,7 +63,8 @@ prevClick(){
 コンストラクタを以下のように書きます。
 コンストラクタ内でユーザーインターフェースを作る処理とスライドショーの現在の番号を定義しておきます。
 ```JavaScript
-	constructor(obj) {
+	constructor(target,obj) {
+		this.target = target;
 		this.obj = obj;
 		this.current = 0;
 		this.userInterface();
@@ -62,21 +81,25 @@ prevClick(){
 let obj = [
 	{
 		"title": "Image 1",
-		"imgPath": "../img/image-1.jpg",
+		"imgPath": "./img/image-1.jpg",
 	},
 	{
 		"title": "Image 2",
-		"imgPath": "../img/image-2.jpg",
+		"imgPath": "./img/image-2.jpg",
 	},
 	{
 		"title": "Image 3",
-		"imgPath": "../img/image-3.jpg",
+		"imgPath": "./img/image-3.jpg",
 	}
-]
-new extSlideShow(obj);
+];
+
+new extSlideShow("#extSlideShow",obj);
 ```
 
+
 これで画像を格納した配列を使うことができるようになりました
+
+## userInterface method
 次にUIを作成します
 これらの画像情報を元にスライドショーの要素となるリストとコントローラーを作成し、#extSlideShowにインサートを行います
 JSのメソッドを使ってNodeを生成します。
@@ -101,6 +124,7 @@ userInterface(){
 	let rightBtn = document.createElement("button");
 	rightBtn.setAttribute("id", "rightBtn");
 	rightBtn.innerHTML = '&#x203a;';
+
 	element.appendChild(leftBtn);
 	element.appendChild(rightBtn);
 ```
@@ -125,38 +149,38 @@ rightBtnとleftBtnにaddEventListnerで紐付けます
 出来上がったコードは以下
 Userinterface method code
 ```JavaScript
-userInterface(){
-	let element = document.getElementById("extSlideShow");
+	userInterface(){
+		let element = document.querySelector(this.target);
 
-	// Image Content
-	let imgEl = document.createElement("img");
-	imgEl.setAttribute("id", "view");
-	imgEl.setAttribute("alt", this.obj[this.current].title);
-	imgEl.setAttribute("src", this.obj[this.current].imgPath);
-	element.appendChild(imgEl);
+		// Image Content
+		let imgEl = document.createElement("img");
+		imgEl.setAttribute("id", "view");
+		imgEl.setAttribute("alt", this.obj[this.current].title);
+		imgEl.setAttribute("src", this.obj[this.current].imgPath);
+		element.appendChild(imgEl);
 
-	
-	// Button
-	let leftBtn = document.createElement("button");
-	leftBtn.setAttribute("id", "leftBtn");
-	leftBtn.innerHTML = '&#x2039;';
+		// Button
+		let leftBtn = document.createElement("button");
+		leftBtn.setAttribute("id", "leftBtn");
+		leftBtn.innerHTML = '&#x2039;';
 
-	let rightBtn = document.createElement("button");
-	rightBtn.setAttribute("id", "rightBtn");
-	rightBtn.innerHTML = '&#x203a;';
+		let rightBtn = document.createElement("button");
+		rightBtn.setAttribute("id", "rightBtn");
+		rightBtn.innerHTML = '&#x203a;';
 
-	element.appendChild(leftBtn);
-	element.appendChild(rightBtn);
+		element.appendChild(leftBtn);
+		element.appendChild(rightBtn);
 
-	// Event handler
-	rightBtn.addEventListener('click', () => this.nextClick());
-	leftBtn.addEventListener('click', () => this.prevClick());
-}
+		// Event handler
+		rightBtn.addEventListener('click', () => this.nextClick());
+		leftBtn.addEventListener('click', () => this.prevClick());
+
+	}
 ```
 
 それでは表示ができたのでCSSを使って
 スライドショーのデザインをしていきます。
-今回は進むボタンと戻るボタンにfontawesomeを使用します
+style.cssを作成して以下のように書いてください。
 
 ```CSS
 #extSlideShow{
@@ -190,7 +214,7 @@ userInterface(){
 }
 ```
 
-# renderImage method
+## renderImage method
 次に配列からオブジェクトを参照して画像を表示させるためのメソッドを作ります
 このメソッドを通すことによって新しい画像に差し替えます
 ```JavaScript
@@ -202,15 +226,14 @@ userInterface(){
 ```
 
 ためしにイベントを実行してみましょう。以下のようにして実行してみましょう。
+rightBtn押下時に画像が変更されます。
 ```JavaScript
 	nextClick(){
 		this.renderImage(2);
 	}
 ```
 
-
-
-# nextClick method
+## nextClick method
 次に進むためのクリックイベントの作成をしていきます。クリックされるごとにコンストラクタ内で定義しているcurrentをインクリメントします。
 しかしインクリメントするだけではダメです。スライドショーの枚数の最大まできたらインクリメントさせないという制限をしなければいけません。
 ```JavaScript
@@ -228,7 +251,7 @@ userInterface(){
 最後にrenderImageに渡します。
 
 
-# prevClick method
+## prevClick method
 前に戻るためのクリックイベントの作成をしていきます。戻るイベントはnextClickイベントの逆でcurrentをデクリメントさせることによって画像を入れ替えます。
 ここでも制限をかける必要があります。配列は0始まりという制約があるため少しややこしくなっていまいます。
 もしも0だった場合はthis.objの最大の数から-1した数をthis.currentに入れます。
@@ -244,16 +267,18 @@ userInterface(){
 	}
 ```
 
-# All code
+## All code
 ```JavaScript
 class extSlideShow{
-	constructor(obj) {
+
+	constructor(target,obj) {
+		this.target = target;
 		this.obj = obj;
 		this.current = 0;
 		this.userInterface();
 	}
 	userInterface(){
-		let element = document.getElementById("extSlideShow");
+		let element = document.querySelector(this.target);
 
 		// Image Content
 		let imgEl = document.createElement("img");
@@ -304,7 +329,7 @@ class extSlideShow{
 }
 
 
-let images = [
+let obj = [
 	{
 		"title": "Image 1",
 		"imgPath": "./img/image-1.jpg",
@@ -319,7 +344,7 @@ let images = [
 	}
 ];
 
-new extSlideShow(images);
+new extSlideShow("#extSlideShow",obj);
 ```
 
 配列を用意したのは画像のパスとタイトルをひとまとめにして管理をしやすくするためです。

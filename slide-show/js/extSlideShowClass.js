@@ -1,11 +1,13 @@
 class extSlideShow{
-	constructor(obj) {
+
+	constructor(target,obj) {
+		this.target = target;
 		this.obj = obj;
 		this.current = 0;
 		this.userInterface();
 	}
 	userInterface(){
-		let element = document.getElementById("extSlideShow");
+		let element = document.querySelector(this.target);
 
 		// Image Content
 		let imgEl = document.createElement("img");
@@ -56,7 +58,7 @@ class extSlideShow{
 }
 
 
-let images = [
+let obj = [
 	{
 		"title": "Image 1",
 		"imgPath": "./img/image-1.jpg",
@@ -71,4 +73,4 @@ let images = [
 	}
 ];
 
-new extSlideShow(images);
+new extSlideShow("#extSlideShow",obj);
