@@ -37,7 +37,7 @@ First one, define Class.
 
 ```JavaScript
 "use strict";
-Class extSlideShow{
+class extSlideShow{
 	constructor() {
 	}
 }
@@ -261,6 +261,7 @@ The last part, Please make click event to display the previous image. The previo
 ## All code
 
 ```JavaScript
+"use strict";
 class extSlideShow{
 
 	constructor(target,obj) {
