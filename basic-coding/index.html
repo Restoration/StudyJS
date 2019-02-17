@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Puzzle Game</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<form action="">
+    <input id="shuffle" type="button" value="shuffle">
+</form>
+
+<div id="board"></div>
+
+
+<script>
+
+const empty = 15;
+
+function render(){
+    let boardElement = document.getElementById('board');
+    for(let i=0; i < 16; i++){
+        // create image tag
+        let imgElement = document.createElement('img');
+        imgElement.setAttribute('src','./img/'+i+'.png');
+        imgElement.setAttribute('width','150');
+        imgElement.setAttribute('height','150');
+        console.log(imgElement);
+        boardElement.appendChild(imgElement); 
+        if(i % 4 == 3){
+            // create br tag
+            let brElement = document.createElement('br');
+            // insert br tag to board
+            //boardElement.appendChild(brElement); 
+        }
+    }
+}
+
+function clickHandler(){
+}
+
+function shffle(){
+}
+
+function userInterface(){
+}
+
+
+function init(){
+    render();
+    userInterface();
+}
+
+init();
+
+
+</script>
+</body>
+</html>
