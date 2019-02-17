@@ -71,7 +71,7 @@ const empty = 15;
 function render(){
 }
 
-function clickHandler(){
+function check(){
 }
 
 function shffle(){
@@ -104,10 +104,13 @@ function render(){
     }
 }
 
-function clickHandler(){
+function check(){
 }
 
 function shffle(){
+}
+
+function userInterface(){
 }
 
 function init(){
@@ -133,7 +136,6 @@ function clickHandler(){
     } else if( ( (num % 4) != 3 ) && ( (num + 1) == empty ) ){
         hit = true;
     }
-
     if(hit == true){
         clickPiece = document.getElementById('#image-'+i);
         emptyPiece = document.getElementById('#image-'+empty);
@@ -146,7 +148,6 @@ function clickHandler(){
 ```
 
 
-Please, bind element and function. Add `addEventListener` in render function.
 ```JavaScript
 function render(){
     let boardElement = document.getElementById('board');
@@ -157,25 +158,78 @@ function render(){
         imgElement.setAttribute('width','150');
         imgElement.setAttribute('height','150');
         imgElement.setAttribute('id','image-'+i);
-        imgElement.addEventListener('click', clickHandler, false); // Added this line
         boardElement.appendChild(imgElement);
-        if(i % 4 == 3){
-            // create br tag
-            let brElement = document.createElement('br');
-            // insert br tag to board
-            boardElement.appendChild(brElement);
-        }
+    }
+}
+```
+
+
+```JavaScript
+function check(id){
+    let clickPiece;
+    let emptyPiece;
+    let hit = false;
+    let num = parseInt(id.substring(6));
+    if( (num == (empty - 4)) || (empty + 4) ){
+        hit = true;
+    } else if( ( (num % 4) != 0 ) && ( (num - 1) == empty ) ){
+        hit = true;
+    } else if( ( (num % 4) != 3 ) && ( (num + 1) == empty ) ){
+        hit = true;
+    }
+    if(hit == true){
+        clickPiece = document.getElementById('image-'+num);
+        emptyPiece = document.getElementById('image-'+empty);
+        let tmp = clickPiece.src;
+        clickPiece.setAttribute('src', emptyPiece.src);
+        emptyPiece.setAttribute('src',tmp);
+        empty = num;
     }
 }
 ```
 
 
 
+```JavaScript
+function userInterface(){
+    for(let i=0; i < 16; i++){
+        let id = 'image-'+i;
+        let imgElement = document.getElementById(id);
+        imgElement.addEventListener('click', () => check(id), false);
+    }
+}
+```
 
 
+```JavaScript
+function init(){
+    render();
+    userInterface();
+}
+```
 
 
+```JavaScript
+function shuffle(){
+    let imgNumber;
+    for(let i=0; i < 300; i++){
+        let imgNumber = Math.floor(Math.random() * 16);
+        let id = 'image-'+imgNumber;
+        check(id);
+    }
+}
+```
 
 
-
-
+```JavaScript
+function userInterface(){
+    for(let i=0; i < 16; i++){
+        let id = 'image-'+i;
+        let imgElement = document.getElementById(id);
+        imgElement.addEventListener('click', () => check(id), false);
+    }
+    // add bellow code
+    let shuffleBtn = document.getElementById('shuffle');
+    shuffleBtn.addEventListener('click', () => shuffle(), false);
+}
+```
