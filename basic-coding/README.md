@@ -77,9 +77,6 @@ function clickHandler(){
 function shffle(){
 }
 
-function userInterface(){
-}
-
 function init(){
 }
 
@@ -96,13 +93,13 @@ function render(){
         imgElement.setAttribute('src','./img/'+i+'.png');
         imgElement.setAttribute('width','150');
         imgElement.setAttribute('height','150');
-        console.log(imgElement);
+        imgElement.setAttribute('id',,'image-'+i);
         boardElement.appendChild(imgElement);
         if(i % 4 == 3){
             // create br tag
             let brElement = document.createElement('br');
             // insert br tag to board
-            boardElement.appendChild(brElement); 
+            boardElement.appendChild(brElement);
         }
     }
 }
@@ -113,15 +110,72 @@ function clickHandler(){
 function shffle(){
 }
 
-function userInterface(){
-}
-
-
 function init(){
     render();
 }
 
 init();
 ```
+
+
+
+
+```JavaScript
+function clickHandler(){
+    let clickPiece;
+    let emptyPiece;
+    let hit = false;
+    let num = parseInt(id.substring(1));
+    if( (num == (empty - 4)) || (empty + 4) ){
+        hit = true;
+    } else if( ( (num % 4) != 0 ) && ( (num - 1) == empty ) ){
+        hit = true;
+    } else if( ( (num % 4) != 3 ) && ( (num + 1) == empty ) ){
+        hit = true;
+    }
+
+    if(hit == true){
+        clickPiece = document.getElementById('#image-'+i);
+        emptyPiece = document.getElementById('#image-'+empty);
+        let tmp = clickPiece.src;
+        clickPiece.setAttribute('src');
+        emptyPiece.setAttribute('src',tmp);
+        empty = num;
+    }
+}
+```
+
+
+Please, bind element and function. Add `addEventListener` in render function.
+```JavaScript
+function render(){
+    let boardElement = document.getElementById('board');
+    for(let i=0; i < 16; i++){
+        // create image tag
+        let imgElement = document.createElement('img');
+        imgElement.setAttribute('src','./img/'+i+'.png');
+        imgElement.setAttribute('width','150');
+        imgElement.setAttribute('height','150');
+        imgElement.setAttribute('id','image-'+i);
+        imgElement.addEventListener('click', clickHandler, false); // Added this line
+        boardElement.appendChild(imgElement);
+        if(i % 4 == 3){
+            // create br tag
+            let brElement = document.createElement('br');
+            // insert br tag to board
+            boardElement.appendChild(brElement);
+        }
+    }
+}
+```
+
+
+
+
+
+
+
+
+
 
 
