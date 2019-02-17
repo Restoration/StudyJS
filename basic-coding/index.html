@@ -26,12 +26,12 @@ function render(){
         imgElement.setAttribute('width','150');
         imgElement.setAttribute('height','150');
         console.log(imgElement);
-        boardElement.appendChild(imgElement); 
+        boardElement.appendChild(imgElement);
         if(i % 4 == 3){
             // create br tag
             let brElement = document.createElement('br');
             // insert br tag to board
-            //boardElement.appendChild(brElement); 
+            boardElement.appendChild(brElement); 
         }
     }
 }
