@@ -20,7 +20,42 @@ You have to know JavaScipt API. JavaScript has many method, so you memorize API 
 JavaScript is very simple because you bind HTML element and event only.
 
 
+## My code design pattern
+First thing, defined a userinterface function and init function. The userInterface function will include bind function and init function is read at first.
+Like this.
+```
+function userInterface(){
+    // addEventListener
+}
+function init(){
+    //Extected at first
+}
+```
+
+For example
+```JavaScript
+function userInterface(){
+    // addEventListener
+    window.addEventListener('load', () => testFunction(), false);
+    element.addEventListener('change', () => test(), false);
+    element.addEventListener('click', () => hoge(arg), false);
+    element.addEventListener('mouseover',() => foo(arg1,arg2), false);
+}
+function init(){
+    hoge();
+    foo();
+    userInterface();
+}
+init();
+```
+
+
+
+
 ## Puzzle Game
+
+First thing, You have to prepare HTML and CSS files.
+
 ```HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -65,8 +100,12 @@ body {
 ```
 
 
+If you already prepare the file, we will prepare javascript files.
+In my opinion, defined function name and grobal variable at first. like this.
+
 ```JavaScript
 const empty = 15;
+const counter = 0;
 
 function render(){
 }
@@ -74,7 +113,10 @@ function render(){
 function check(){
 }
 
-function shffle(){
+function shuffle(){
+}
+
+function userInterface(){
 }
 
 function init(){
@@ -82,6 +124,27 @@ function init(){
 
 init();
 ```
+
+| function name | meaning |
+|---|---|
+| render |  Render puzzle game element |
+| check | Check the piece to can move  |
+| shuffle | Shuffle piece |
+| userInterface | To bind function and element | 
+| init | execute at first |
+
+And then, I
+
+I always use `init` function, this function executes at the first time when it loads the browser.  The init function include another function to control. In this case, you need to execute render function. so init function has to include render function.
+
+```
+function init(){
+    render();
+}
+init();
+```
+
+It's my coding rule.
 
 
 ```JavaScript
@@ -107,7 +170,7 @@ function render(){
 function check(){
 }
 
-function shffle(){
+function shuffle(){
 }
 
 function userInterface(){
