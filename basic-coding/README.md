@@ -22,7 +22,7 @@ JavaScript is very simple because you bind HTML element and event only.
 First thing, defined a userinterface function and init function. The init function likes constructor.
 And the userInterface function will include bind function and init function is read at first.
 Like this.
-```
+```JavaScript
 function userInterface(){
     // addEventListener
 }
