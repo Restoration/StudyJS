@@ -1,0 +1,23 @@
+body {
+    line-height: 0;
+    background: #dddddd;
+}
+
+#shuffle{
+    display: block;
+    margin: 0 auto 20px;
+    text-align: center;
+}
+
+#board{
+    display: block;
+    width: 600px;
+    height: 600px;
+    margin: 20px auto;
+}
+#board img{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
